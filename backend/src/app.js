@@ -17,21 +17,18 @@ const app = express();
 
 // CORS Configuration
 const allowedOrigins = [
-  'https://mentorlink-three.vercel.app', // Deployed frontend
-  'http://localhost:5173',               // Local frontend for development
+  process.env.FRONTEND_URL || 'http://localhost:5173',
+  'https://mentor-mentee-w0gg.onrender.com'
+// add more if needed (e.g. staging URL)
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Allow no-origin (e.g., Postman)
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error(`CORS policy does not allow access from origin ${origin}`));
-    }
-  },
-  credentials: true,
+app.use(cors({ 
+  origin: allowedOrigins, 
+  credentials: true, 
+  exposedHeaders: ['Authorization'] 
 }));
+
+app.options('*', cors({ origin: allowedOrigins, credentials: true }));
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
