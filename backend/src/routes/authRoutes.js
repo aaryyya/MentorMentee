@@ -1,7 +1,14 @@
 import express from 'express';
-import { registerUser, loginUser } from '../controllers/authController.js';
-
+import {
+  registerUser,
+  loginUser,
+  getCurrentUser      // ← new
+} from '../controllers/authController.js';
+import { authMiddleware } from '../middleware/authMiddleware.js';
 const router = express.Router();
+
+// Get current user info (requires valid Bearer token)
+router.get('/me', authMiddleware, getCurrentUser);
 
 // Register a new user
 router.post('/register', registerUser);

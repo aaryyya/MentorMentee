@@ -21,3 +21,10 @@ export const loginUser = async (credentials) => {
     throw error.response?.data?.message || 'Login failed';
   }
 };
+
+export const getCurrentUser = () => {
+  const token = localStorage.getItem('accessToken');
+  return axios.get(`${API_BASE_URL}/auth/me`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+};

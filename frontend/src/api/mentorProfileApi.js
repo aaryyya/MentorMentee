@@ -16,3 +16,7 @@ export const getMentorProfileById = (id) =>
 /** Update a mentor profile by its ID */
 export const updateMentorProfile = (id, data) =>
   axios.put(`${API_BASE_URL}/mentor/updateprofile/${id}`, data, authHeader());
+
+// fetch by mentor’s userId:
+export const getMentorProfileByUserId = (userId) =>
+  axios.get(`${API_BASE_URL}/mentor/profile/user/${userId}`, authHeader());

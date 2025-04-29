@@ -96,3 +96,20 @@ export const refreshToken = async (req, res) => {
     res.status(400).json({ message: "Invalid or expired refresh token", error });
   }
 };
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const userId = req.user.id;             // set by authMiddleware
+    const user = await User.findById(userId)
+      .select("username email role mentorId"); // only fields we need
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.error("Error in getCurrentUser:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
