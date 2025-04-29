@@ -5,7 +5,8 @@ import {
   getAllMentorProfiles,
   getMentorProfileById,
   getMyMentorProfile,
-  updateMentorProfile
+  updateMentorProfile,
+  getMentorProfileByUserId,
 } from '../controllers/MentorProfileController.js';
 
 const router = express.Router();
@@ -24,5 +25,8 @@ router.get('/profile/:id', authMiddleware, getMentorProfileById);
 
 // 🔒 Update mentor profile by ID
 router.put('/updateprofile/:id', authMiddleware, updateMentorProfile);
+
+// 🔒 Get mentor profile by user ID (for MyMentor page)
+router.get('/profile/user/:userId', authMiddleware, getMentorProfileByUserId);
 
 export default router;
